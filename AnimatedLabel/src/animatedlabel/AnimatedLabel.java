@@ -4,7 +4,10 @@
  */
 package animatedlabel;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.Serializable;
+import javax.swing.Timer;
 
 /**
  *
@@ -16,6 +19,7 @@ public class AnimatedLabel implements Serializable {
     private String appendedText;
     private int delay;
     private boolean animate;
+    
 
     public String getText() {
         return text;
@@ -54,10 +58,8 @@ public class AnimatedLabel implements Serializable {
         this.appendedText = appendedText;
         this.delay = delay;
         this.animate = animate;
+        setText(text);
+        
     }
-    
-    
-    
-    
-    
+
 }

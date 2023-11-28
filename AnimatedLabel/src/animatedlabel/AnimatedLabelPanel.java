@@ -10,9 +10,11 @@ package animatedlabel;
  */
 public class AnimatedLabelPanel extends javax.swing.JPanel {
 
-    /**
-     * Creates new form AnimatedLabelPanel
-     */
+    private String text;
+    private String appText;
+    private int delay;
+    private boolean animate = false;
+    
     public AnimatedLabelPanel() {
         initComponents();
     }
@@ -53,16 +55,32 @@ public class AnimatedLabelPanel extends javax.swing.JPanel {
         jLabel2.setText("AppendText");
 
         btnSetAppendText.setText("Set");
+        btnSetAppendText.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSetAppendTextActionPerformed(evt);
+            }
+        });
 
         jLabel3.setText("Delay");
 
+        sldDelay.setMajorTickSpacing(100);
         sldDelay.setMaximum(1000);
         sldDelay.setPaintLabels(true);
         sldDelay.setPaintTicks(true);
         sldDelay.setSnapToTicks(true);
         sldDelay.setValue(100);
+        sldDelay.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                sldDelayStateChanged(evt);
+            }
+        });
 
         btnAnimate.setText("Animate");
+        btnAnimate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAnimateActionPerformed(evt);
+            }
+        });
 
         jLabel4.setText("Animated Label");
 
@@ -75,7 +93,11 @@ public class AnimatedLabelPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(18, 18, 18)
+                        .addComponent(sldDelay, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel2)
@@ -83,26 +105,18 @@ public class AnimatedLabelPanel extends javax.swing.JPanel {
                                 .addComponent(txtAppendText))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(txtText, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnSetText)
-                            .addComponent(btnSetAppendText))
-                        .addGap(57, 57, 57))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnAnimate)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addGap(53, 53, 53)
-                                .addComponent(sldDelay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4)
-                    .addComponent(txtDemo, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnSetAppendText)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnAnimate)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
+                            .addComponent(txtDemo, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(57, 57, 57))
         );
         layout.setVerticalGroup(
@@ -122,20 +136,37 @@ public class AnimatedLabelPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(sldDelay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnAnimate)
-                .addGap(26, 26, 26)
+                .addGap(55, 55, 55)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtDemo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtDemo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAnimate))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSetTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSetTextActionPerformed
-        // TODO add your handling code here:
+        text = txtText.getText();
     }//GEN-LAST:event_btnSetTextActionPerformed
 
+    private void btnSetAppendTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSetAppendTextActionPerformed
+        appText = txtAppendText.getText();
+    }//GEN-LAST:event_btnSetAppendTextActionPerformed
+
+    private void sldDelayStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_sldDelayStateChanged
+        delay = sldDelay.getValue();
+    }//GEN-LAST:event_sldDelayStateChanged
+
+    private void btnAnimateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnimateActionPerformed
+        animate = true;
+        
+    }//GEN-LAST:event_btnAnimateActionPerformed
+
+    public AnimatedLabel getSelectedValue(){
+        return new AnimatedLabel(text, appText, delay, animate);
+    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAnimate;
