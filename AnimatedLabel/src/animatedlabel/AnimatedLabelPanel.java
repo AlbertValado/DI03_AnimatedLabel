@@ -4,6 +4,10 @@
  */
 package animatedlabel;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.Timer;
+
 /**
  *
  * @author Albert
@@ -84,8 +88,6 @@ public class AnimatedLabelPanel extends javax.swing.JPanel {
 
         jLabel4.setText("Animated Label");
 
-        txtDemo.setText("Demo");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -160,7 +162,23 @@ public class AnimatedLabelPanel extends javax.swing.JPanel {
 
     private void btnAnimateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnimateActionPerformed
         animate = true;
-        
+        AnimatedLabel animatedLabel = new AnimatedLabel(text, appText, delay, animate);
+        if (animatedLabel != null) {
+            Timer timer = new Timer(animatedLabel.getDelay(), new ActionListener() {
+                int i = 0;
+
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if (animatedLabel.isAnimate()) {
+                        txtDemo.setText(animatedLabel.getText() + animatedLabel.getAppendedText().substring(0, i));
+                        i = (i + 1) % (animatedLabel.getAppendedText().length() + 1);
+                    } else {
+                        txtDemo.setText(animatedLabel.getText());
+                    }
+                }
+            });
+            timer.start();
+        }
     }//GEN-LAST:event_btnAnimateActionPerformed
 
     public AnimatedLabel getSelectedValue(){

@@ -158,9 +158,6 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtDemo">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Demo"/>
-      </Properties>
     </Component>
   </SubComponents>
 </Form>
